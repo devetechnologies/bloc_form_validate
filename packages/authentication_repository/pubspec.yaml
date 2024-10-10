@@ -1,0 +1,7 @@
+name: authentication_repository
+description: Dart package manages the authentication domain of the form
+publish_to: none
+
+
+environment: 
+  sdk: ">=3.4.1 <4.0.0"
