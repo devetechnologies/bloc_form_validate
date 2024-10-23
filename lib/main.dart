@@ -62,29 +62,26 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              switch (state.status) {
-                case AuthenticationStatus.autheticated:
-                  _navigator.pushAndRemoveUntil<void>(
-                      HomePage.route(), (route) => false);
+        navigatorKey: _navigatorKey,
+        builder: (context, child) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.autheticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                        HomePage.route(), (route) => false);
 
-                case AuthenticationStatus.unauthenticated:
-                  _navigator.pushAndRemoveUntil<void>(
-                      LoginPage.route(), (route) => false);
-                case AuthenticationStatus.uknown:
-                  print('Intooooo');
-                  break;
-                // TODO: Handle this case.
-              }
-            },
-            child: const SplashPage());
-      },
-      onGenerateRoute: (settings) {
-        return null;
-      },
-    );
+                  case AuthenticationStatus.unauthenticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                        LoginPage.route(), (route) => false);
+                  case AuthenticationStatus.uknown:
+                    print('Intooooo');
+                    break;
+                  // TODO: Handle this case.
+                }
+              },
+              child: child);
+        },
+        onGenerateRoute: (_) => SplashPage.route());
   }
 }
