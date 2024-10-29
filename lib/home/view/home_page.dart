@@ -12,15 +12,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Testing'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [_LogoutButton()],
-          //children: [_UserId(), _LogoutButton()],
+          children: [_UserId(), _LogoutButton()],
         ),
       ),
     );
@@ -38,5 +34,18 @@ class _LogoutButton extends StatelessWidget {
         context.read<AuthenticationBloc>().add(AuthenticationLogoutPressed());
       },
     );
+  }
+}
+
+class _UserId extends StatelessWidget {
+  const _UserId();
+
+  @override
+  Widget build(BuildContext context) {
+    final userId = context.select(
+      (AuthenticationBloc bloc) => bloc.state.user.id,
+    );
+
+    return Text('UserID: $userId');
   }
 }

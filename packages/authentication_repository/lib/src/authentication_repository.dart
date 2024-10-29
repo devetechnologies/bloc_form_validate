@@ -11,7 +11,7 @@ class AuthenticationRepository {
     yield* _controller.stream;
   }
 
-  Future login({
+  Future logIn({
     required String username,
     required String password,
   }) async {
