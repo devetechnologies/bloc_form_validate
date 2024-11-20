@@ -24,6 +24,8 @@ class LoginForm extends StatelessWidget {
           children: [
             _UsernameInput(),
             Padding(padding: EdgeInsets.all(12)),
+            _EmailInput(),
+            Padding(padding: EdgeInsets.all(12)),
             _PasswordInput(),
             Padding(padding: EdgeInsets.all(12)),
             _LoginButton(),
@@ -76,6 +78,29 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
+class _EmailInput extends StatelessWidget {
+  const _EmailInput({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final displayError = context.select(
+      (LoginBloc bloc) => bloc.state.email.displayError,
+    );
+
+    return TextField(
+      key: const Key('loginForm_emaildInput_textField'),
+      onChanged: (email) {
+        context.read<LoginBloc>().add(LoginEmailChanged(email));
+      },
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: 'email',
+        errorText: displayError != null ? 'invalid email' : null,
+      ),
+    );
+  }
+}
+
 class _LoginButton extends StatelessWidget {
   const _LoginButton({super.key});
 
@@ -93,7 +118,7 @@ class _LoginButton extends StatelessWidget {
       key: const Key('loginForm_continue_raisedButton'),
       onPressed: isValid
           ? () => context.read<LoginBloc>().add(const LoginSubmitted())
-          : null,
+          : () => context.read<LoginBloc>().add(const LoginSubmitted()),
       child: const Text('Login'),
     );
   }
